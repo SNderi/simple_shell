@@ -4,6 +4,7 @@
  * main - start of program execution
  * @ac: number of strings in av
  * @av: array of commands to pass to exec
+ * @env: array of environment variables
  *
  * Return: 0(Sucess)
  */
@@ -11,7 +12,6 @@ int main(int ac __attribute__((unused)), char **av, char **env)
 {
 	char *line;
 	char **args;
-	extern char **environ;
 	int status, i;
 
 	while (1)

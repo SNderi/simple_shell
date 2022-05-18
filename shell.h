@@ -9,6 +9,7 @@
 #include <sys/wait.h>
 #include <errno.h>
 
+extern char **environ;
 
 char *_getline();
 char **tokenize(char *line);

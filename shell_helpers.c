@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _getline - gets arguments from stdin and stores them in the string array line
+ * _getline - gets line from stdin and stores in the string array line
  *
  * Return: the newly created string of arguments, line
  */
@@ -15,7 +15,7 @@ char *_getline()
 	count = getline(&line, &len, stdin);
 	if (count == -1)
 	{
-		if(feof(stdin))
+		if (feof(stdin))
 			exit(EXIT_SUCCESS);
 		else
 		{
@@ -24,7 +24,6 @@ char *_getline()
 		}
 	}
 
-	//printf("%s", line);
 	return (line);
 }
 
@@ -55,7 +54,7 @@ char **tokenize(char *line)
 		if (i >= size)
 		{
 			size += size;
-			av = realloc(av, size * sizeof(char*));
+			av = realloc(av, size * sizeof(char *));
 			if (!av)
 			{
 				perror("realloc");
@@ -71,6 +70,7 @@ char **tokenize(char *line)
 /**
  * _exec - runs the exec function on different arguments
  * @args: input string array of arguments
+ * @env: input string array of environment variables
  *
  * Return: int
  */
@@ -78,23 +78,21 @@ int _exec(char **args, char **env)
 {
 	pid_t pid;
 
-	if (args[0] == NULL)
+	if (!args[0])
 		return (1);
 
 	pid = fork();
 	if (pid == 0) /* child process */
 	{
-		if ((execve(args[0], args, env)) == -1);
+		if ((execve(args[0], args, env)) == -1)
 		{
 			perror("error");
 			exit(EXIT_FAILURE);
 		}
 	}
 	else if (pid < 0)
-	        perror("fork");
+		perror("fork");
 	else /* parent process */
-	{
 		wait(NULL);
-	}
 	return (1);
 }
