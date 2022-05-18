@@ -14,7 +14,5 @@ extern char **environ;
 char *_getline();
 char **tokenize(char *line);
 int _exec(char **args, char **env);
-int shell_exit();
-int print_env();
 
 #endif /* SHELL_H */
