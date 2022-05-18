@@ -7,9 +7,14 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.>
 #include <errno.h>
 
-extern char **environ;
+typedef struct arguments
+{
+	char **argv;
+	char **env;
+}args_t;
 
 char *_getline();
 char **tokenize(char *line, char *del);

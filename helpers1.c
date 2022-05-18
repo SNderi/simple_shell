@@ -72,22 +72,34 @@ char **tokenize(char *line, char *del)
 int _exec(char **args, char **env)
 {
 	pid_t pid;
-
-	if (!args[0])
-		return (1);
-
-	pid = fork();
-	if (pid == 0) /* child process */
+	struct stat buf;
+	if (stat(args[0], &buf) == 0)
 	{
-		if ((execve(args[0], args, env)) == -1)
+		if (access(args[0], X_OK) == 0)
+		{
+			pid = fork();
+			if (pid == -1)
+				perror(args[0]);
+			if (pid == 0) /* child process */
+			{
+				if ((execve(args[0], args, env)) == -1)
+				{
+					perror(args[0]);
+					exit(EXIT_FAILURE);
+				}
+			}
+			else /* parent process */
+				wait(NULL);
+			return (1);	
+		}
+		else
 		{
 			perror(args[0]);
-			exit(EXIT_FAILURE);
 		}
 	}
-	else if (pid < 0)
-		perror("fork");
-	else /* parent process */
-		wait(NULL);
-	return (1);
+	else
+	{
+		perror(args[0]);
+		return (0);
+	}
 }

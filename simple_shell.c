@@ -11,7 +11,7 @@
 int main(int ac __attribute__((unused)), char **av, char **env)
 {
 	char *line;
-	char **args;
+	args_t vectors = {NULL, env}
 	int status, i;
 	char *delimiter = " \n";
 
@@ -24,8 +24,8 @@ int main(int ac __attribute__((unused)), char **av, char **env)
 			free(line);
 			continue;
 		}
-		args = tokenize(line, delimiter);
-		if (strcmp(args[0], "env") == 0)
+		vectors->argv = tokenize(line, delimiter);
+		if (strcmp(argv[0], "env") == 0)
 		{
 			for (i = 0; environ[i]; i++)
 			{
@@ -33,12 +33,10 @@ int main(int ac __attribute__((unused)), char **av, char **env)
 				_printf("\n");
 			}
 		}
-		else if (strcmp(args[0], "exit") == 0)
+		else if (strcmp(argv[0], "exit") == 0)
 		{
 			exit(status);
 		}
-		else
-			_exec(args, env);
 
 		free(line);
 		free(args);
