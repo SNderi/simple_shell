@@ -15,58 +15,53 @@ char *_getline()
 	count = getline(&line, &len, stdin);
 	if (count == -1)
 	{
-		if (feof(stdin))
-			exit(EXIT_SUCCESS);
-		else
-		{
-			perror("getline");
-			exit(EXIT_FAILURE);
-		}
+		fprintf(stdout, "%s", strerror(errno));
 	}
 
 	return (line);
 }
 
 /**
- * tokenize - tokenizes each work in the line from _getline
- * @line: input line
+ * tokenize - tokenizes a string with a delimiter
+ * @line: input buffer
+ * @del: delimiter to use
  *
  * Return: pointer to an array of strings
  */
-char **tokenize(char *line)
+char **tokenize(char *line, char *del)
 {
-	int size = 64, i = 0;
-	char **av = malloc(size * sizeof(char *));
+	size_t size = 10;
+	int i = 0;
+	char **av = NULL;
 	char *token;
 
+	if (line == NULL)
+		return (NULL);
+
+	av = malloc(size * sizeof(char *));
 	if (av == NULL)
 	{
-		perror("malloc");
-		exit(EXIT_FAILURE);
+		perror("error on malloc allocation");
+		return (NULL);
 	}
 
-	token = strtok(line, " \n");
-	while (token != NULL)
+	while ((av[i] = strtok(line, del)) != NULL)
 	{
-		av[i] = token;
 		i++;
-
-		if (i >= size)
+		if (i == size)
 		{
-			size += size;
-			av = realloc(av, size * sizeof(char *));
-			if (!av)
+			av = realloc(av, size);
+			if (av == NULL)
 			{
-				perror("realloc");
-				exit(EXIT_FAILURE);
+				perror("Fatal Error");
+				return (NULL);
 			}
 		}
-
-		token = strtok(NULL, " \n");
+		line = NULL;
 	}
-	av[i] = NULL;
 	return (av);
 }
+
 /**
  * _exec - runs the exec function on different arguments
  * @args: input string array of arguments

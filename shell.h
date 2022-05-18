@@ -12,7 +12,13 @@
 extern char **environ;
 
 char *_getline();
-char **tokenize(char *line);
+char **tokenize(char *line, char *del);
 int _exec(char **args, char **env);
+void _printf(char *string);
+void _strcpy(char *dest, char *src);
+int _strlen(char *string);
+int _strcmp(char *str1, char *str2);
+char *_strcat(char *dest, char *src);
+char *_getenv(char *name);
 
 #endif /* SHELL_H */
