@@ -81,7 +81,7 @@ int _exec(char **args, char **env)
 	{
 		if ((execve(args[0], args, env)) == -1)
 		{
-			perror("error");
+			perror(args[0]);
 			exit(EXIT_FAILURE);
 		}
 	}

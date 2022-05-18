@@ -18,12 +18,12 @@ int main(int ac __attribute__((unused)), char **av, char **env)
 	while (1)
 	{
 		printf("$ ");
-		if (STDIN_FILENO == '\n')
+		line = _getline();
+		if (line[0] == '\0' || _strcmp(line, "\n") == 0)
 		{
-			_printf("this is it!");
+			free(line);
 			continue;
 		}
-		line = _getline();
 		args = tokenize(line, delimiter);
 		if (strcmp(args[0], "env") == 0)
 		{
