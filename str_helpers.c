@@ -55,21 +55,52 @@ int _strcmp(char *str1, char *str2)
 }
 
 /**
- * _strcat - concatenates two strings
- * @dest: base string
- * @src: string to concatenate to dest
- *
- * Return: address of new string
+ * _strcat - concatenates the path with '/' and the command(strc2)
+ * @path: first string
+ * @command: second string
+ * Return: pointer
  */
-char *_strcat(char *dest, char *src)
+char *_strcat(char *path, char *command)
 {
-	char *new;
-	int dest_len = _strlen(dest);
-	int src_len = _strlen(src);
+	char *str_new;
+	unsigned int len1, len2, newlen, i, j;
 
-	new = malloc(sizeof(char) * (dest_len + src_len + 1));
-	_strcpy(new, dest);
-	_strcpy(new + dest_len, src);
-	new[dest_len + src_len] = '\0';
-	return (new);
+	len1 = 0;
+	len2 = 0;
+	if (path == NULL)
+		len1 = 0;
+	else
+	{
+		/* find the length of path token*/
+		for (len1 = 0; path[len1]; len1++)
+			;
+	}
+	if (command == NULL)
+		len2 = 0;
+	else
+	{
+		/* find the length of command typed*/
+		for (len2 = 0; command[len2]; len2++)
+			;
+	}
+	newlen = len1 + len2 + 2; /* 2 to cater for '/' and '\0' */
+
+	str_new = malloc(newlen * sizeof(char));
+	if (str_new == NULL)
+	{
+		_printf("Error: malloc() in _strcat()");
+		return (NULL);
+	}
+
+	for (i = 0; i < len1; i++)
+		str_new[i] = path[i];
+	str_new[i] = '/';
+	for (j = 0; j < len2; j++)
+	{
+		str_new[i + 1] = command[j];
+		i++;
+	}
+	str_new[i] = '\0';
+
+	return (str_new);
 }

@@ -11,10 +11,10 @@
 int main(int ac __attribute__((unused)), char **av, char **env)
 {
 	char *line;
-	args_t vectors = {NULL, env};
 	int status, i;
-	char *delimiter = " \n";
+	args_t vectors = {NULL, NULL};
 
+	vectors.env = _env(env);
 	while (1)
 	{
 		printf("$ ");
@@ -24,7 +24,16 @@ int main(int ac __attribute__((unused)), char **av, char **env)
 			free(line);
 			continue;
 		}
-		vectors.argv = tokenize(line, delimiter);
+		vectors.argv = tokenize(line, " \n");
+
+		/* checks if we have the argv vector */
+		for (i = 0; vectors.argv[i] != NULL; i++)
+		{
+			_printf(vectors.argv[i]);
+			_printf(" Tokenize works well");
+		}
+		_printf("\n");
+
 		if (strcmp(vectors.argv[0], "env") == 0)
 		{
 			for (i = 0; environ[i]; i++)
@@ -39,13 +48,12 @@ int main(int ac __attribute__((unused)), char **av, char **env)
 		}
 		if (vectors.argv && vectors.argv[0])
 		{
-			if ((_exec(vectors.argv, vectors.env)) == 1)
-				path_validate(vectors);
+			path_validate(&vectors);
 		}
 
 		free(line);
 		free(vectors.argv);
 	}
-
+	free(vectors.env);
 	return (0);
 }
