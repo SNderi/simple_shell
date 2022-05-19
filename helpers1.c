@@ -63,7 +63,7 @@ char **tokenize(char *line, char *del)
 }
 
 /**
- * _exec - runs the exec function on different arguments
+ * _exec - runs the exec function in current dir
  * @args: input string array of arguments
  * @env: input string array of environment variables
  *
@@ -73,6 +73,7 @@ int _exec(char **args, char **env)
 {
 	pid_t pid;
 	struct stat buf;
+
 	if (stat(args[0], &buf) == 0)
 	{
 		if (access(args[0], X_OK) == 0)
@@ -90,7 +91,7 @@ int _exec(char **args, char **env)
 			}
 			else /* parent process */
 				wait(NULL);
-			return (1);	
+			return (1);
 		}
 		else
 		{
