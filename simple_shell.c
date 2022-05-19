@@ -8,13 +8,13 @@
  *
  * Return: 0(Sucess)
  */
-int main(int ac __attribute__((unused)), char **av, char **env)
+int main(void)
 {
 	char *line;
-	int status, i;
+	int i;
 	args_t vectors = {NULL, NULL};
 
-	vectors.env = _env(env);
+	vectors.env = _env(environ);
 	while (1)
 	{
 		printf("$ ");
@@ -36,7 +36,7 @@ int main(int ac __attribute__((unused)), char **av, char **env)
 		}
 		else if (strcmp(vectors.argv[0], "exit") == 0)
 		{
-			exit(status);
+			exit(EXIT_SUCCESS);
 		}
 		if (vectors.argv && vectors.argv[0])
 		{

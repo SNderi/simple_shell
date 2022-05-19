@@ -160,12 +160,12 @@ void path_validate(args_t *vec)
 			}
 			free(path_duplicate);
 			if (tokens == NULL)
-				exit;
+				exit(EXIT_FAILURE);
 		}
 		if (path == NULL || tokens[i] == NULL)
 			perror(vec->argv[0]);
 		free(tokens);
 	}
 	if (result == 1)
-		exit;
+		exit(EXIT_SUCCESS);
 }
