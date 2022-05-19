@@ -17,7 +17,7 @@ int main(void)
 	{
 		printf("$ ");
 		line = _getline();
-		if (line[0] == '\0' || _strcmp(line, "\n") == 0)
+		if (line[0] == '\0' || line[1] == '\0' || _strcmp(line, "\n") == 0)
 		{
 			free(line);
 			continue;

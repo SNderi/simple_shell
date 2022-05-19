@@ -15,7 +15,13 @@ char *_getline()
 	count = getline(&line, &len, stdin);
 	if (count == -1)
 	{
-		fprintf(stdout, "%s", strerror(errno));
+		if (feof(stdin))
+			exit(EXIT_SUCCESS);
+		else
+		{
+			perror("Error: getline()");
+			return (NULL);
+		}
 	}
 
 	return (line);
