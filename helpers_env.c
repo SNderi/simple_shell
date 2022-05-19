@@ -17,7 +17,7 @@ char **_env(char **env)
 	if (new_env == NULL)
 	{
 		perror("Error: malloc in _env");
-		return (NULL);;
+		return (NULL);
 	}
 	for (i = 0; env[i] != NULL; i++)
 		new_env[i] = strdup(env[i]);

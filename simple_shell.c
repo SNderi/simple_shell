@@ -26,14 +26,6 @@ int main(int ac __attribute__((unused)), char **av, char **env)
 		}
 		vectors.argv = tokenize(line, " \n");
 
-		/* checks if we have the argv vector */
-		for (i = 0; vectors.argv[i] != NULL; i++)
-		{
-			_printf(vectors.argv[i]);
-			_printf(" Tokenize works well");
-		}
-		_printf("\n");
-
 		if (strcmp(vectors.argv[0], "env") == 0)
 		{
 			for (i = 0; environ[i]; i++)

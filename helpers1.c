@@ -9,7 +9,7 @@ char *_getline()
 {
 	int count;
 	char *line = NULL;
-	ssize_t len = 0;
+	size_t len = 0;
 
 	/* getline takes the line from stdin and puts it in a buffer */
 	count = getline(&line, &len, stdin);
@@ -28,39 +28,44 @@ char *_getline()
  *
  * Return: pointer to an array of strings
  */
-char **tokenize(char *line, char*del)
+char **tokenize(char *line, char *del)
 {
 	int bufsize = 64, position = 0;
-	char **tokens = malloc(64 * sizeof(char *));
+	int len, x;
 	char *token, *new;
-	int len;
+	char **tokens = malloc(bufsize * sizeof(char *));
 
-	if (!tokens) {
+	if (tokens == NULL)
+	{
 		perror("Error: malloc() in tokenize()");
 		exit(EXIT_FAILURE);
 	}
 
-	len = strlen(line);
+	len = strlen(line); /* new is equal line */
 	new = malloc(len);
 	strcpy(new, line);
 
-	token = strtok(new, " ");
-	while (token != NULL) {
-		tokens[position] = token;
+	token = strtok(new, del);
+	while (token != NULL)
+	{
+		x = strlen(token);
+		tokens[position] = malloc(x * sizeof(char));
+		strcpy(tokens[position], token);
 		position++;
 
-		if (position >= bufsize) {
+		if (position >= bufsize)
+		{
 			bufsize += 64;
-			tokens = realloc(tokens, bufsize * sizeof(char*));
-			if (!tokens) {
+			tokens = realloc(tokens, bufsize * sizeof(char *));
+			if (tokens == NULL)
+			{
 				perror("Error: realloc() in tokenize()");
 				exit(EXIT_FAILURE);
 			}
 		}
-
-		token = strtok(NULL, " ");
+		token = strtok(NULL, del);
 	}
 	tokens[position] = NULL;
 	free(new);
-	return tokens;
+	return (tokens);
 }

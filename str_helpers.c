@@ -88,7 +88,7 @@ char *_strcat(char *path, char *command)
 	str_new = malloc(newlen * sizeof(char));
 	if (str_new == NULL)
 	{
-		_printf("Error: malloc() in _strcat()");
+		printf("Error: malloc() in _strcat()");
 		return (NULL);
 	}
 
@@ -97,10 +97,9 @@ char *_strcat(char *path, char *command)
 	str_new[i] = '/';
 	for (j = 0; j < len2; j++)
 	{
-		str_new[i + 1] = command[j];
-		i++;
+		str_new[i + 1 + j] = command[j];
 	}
-	str_new[i] = '\0';
+	str_new[newlen - 1] = '\0';
 
 	return (str_new);
 }

@@ -11,7 +11,7 @@ int path_check(char *arg)
 {
 	int i;
 
-	for (i = 0; arg[i]; i++)
+	for (i = 0; arg[i] != '\0'; i++)
 	{
 		if (arg[i] == '/')
 			return (1);
@@ -21,7 +21,7 @@ int path_check(char *arg)
 
 /**
  * find_path - Finds PATH variable
- * @envp: Environment variables arrray
+ * @env: Environment variables arrray
  *
  * Return: Pointer to node that contains the PATH, NULL on failure
  */
@@ -78,7 +78,8 @@ int exec_current(args_t *vec)
 		}
 			return (0);
 	}
-	perror("Error: stat() in exec_current() ");
+	else
+		perror("Error: stat() in exec_current() ");
 	return (0);
 }
 
@@ -86,7 +87,7 @@ int exec_current(args_t *vec)
 /**
  * exec_path - executes commands with a full path
  * @command_path: full path to the command
- * @vars: pointer to struct of string array
+ * @vec: pointer to struct of string array
  *
  * Return: 0 on succcess, 1 on failure
  */
@@ -122,7 +123,7 @@ int exec_path(char *command_path, args_t *vec)
 /**
  * path_validate - Checks if command is a path and executes else finds it in
  * path variable and executes it
- * @args: Argument vector
+ * @vec: Argument vector
  *
  * Return: void
  */
@@ -131,56 +132,24 @@ void path_validate(args_t *vec)
 {
 	int result = 0;
 	char *path;
-	char *path_duplicate = NULL;
-	char *check = NULL;
+	char *path_duplicate = NULL, *check = NULL;
 	unsigned int i = 0;
 	char **tokens;
 	struct stat buf;
 
-	/* if command is a full path, execute the command */
-	if (path_check(vec->argv[0]))
-	{
-		_printf("It is a path, I have been executed by pathvalidate().exec_current()");
-		_printf("\n");
+	if (path_check(vec->argv[0])) /* if command is a full path */
 		result = exec_current(vec);
-	}
 	else
 	{
 		path = find_path(vec->env); /* Returns PATH string */
 
-		/* check if PATH is correct */
-		_printf("path is: ");
-		_printf(path);
-		_printf("\n");
-
 		if (path != NULL)
 		{
-			/* skips the string "PATH=" */
-			path_duplicate = strdup(path + 5);
-
-			/* check if path_duplicate is correct */
-			_printf("path_duplicate of path: ");
-			_printf(path_duplicate);
-			_printf("\n");
-
+			path_duplicate = strdup(path + 5); /* removing PATH= */
 			tokens = tokenize(path_duplicate, ":");
-
-			/* check if path_duplicate has been tokenized */
-			_printf("Tokenized path(tokens) is: ");
-			for (i = 0; tokens[i] != NULL; i++)
-			{
-				_printf(tokens[i]);
-				_printf("-");
-			}
-			_printf("\n");
-
 			for (i = 0; tokens && tokens[i]; i++)
 			{
 				check = _strcat(tokens[i], vec->argv[0]);
-
-				_printf("Command after concatenating: ");
-				_printf(check);
-				_printf("\n");
 
 				if (stat(check, &buf) == 0)
 				{
@@ -191,14 +160,10 @@ void path_validate(args_t *vec)
 			}
 			free(path_duplicate);
 			if (tokens == NULL)
-			{
 				exit;
-			}
 		}
 		if (path == NULL || tokens[i] == NULL)
-		{
-		        perror("PATH not found in path_validate()");
-		}
+			perror(vec->argv[0]);
 		free(tokens);
 	}
 	if (result == 1)
