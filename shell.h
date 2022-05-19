@@ -10,11 +10,17 @@
 #include <sys/stat.h>
 #include <errno.h>
 
+/**
+ * struct arguments - structure that holds the arg vector from stdin and an
+ * environment variable
+ * @argv: string array of the command arguments
+ * @env: string array of env values
+ */
 typedef struct arguments
 {
 	char **argv;
 	char **env;
-}args_t;
+} args_t;
 
 extern char **environ;
 
