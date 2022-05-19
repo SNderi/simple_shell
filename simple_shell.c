@@ -2,9 +2,7 @@
 
 /**
  * main - start of program execution
- * @ac: number of strings in av
- * @av: array of commands to pass to exec
- * @env: array of environment variables
+ *
  *
  * Return: 0(Sucess)
  */
