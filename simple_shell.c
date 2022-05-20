@@ -29,7 +29,11 @@ int main(int ac __attribute__((unused)), char **av)
 			free(line);
 			continue;
 		}
-		vectors.argv = tokenize(line, " \n");
+		_printf("I got line!\n");
+		vectors.argv = tokenize(line, " \n\t\r");
+		_printf("I tokenized!\n");
+		if (vectors.argv[0] == NULL)
+			continue;
 		if (strcmp(vectors.argv[0], "env") == 0)
 		{
 			for (i = 0; environ[i]; i++)
@@ -40,6 +44,7 @@ int main(int ac __attribute__((unused)), char **av)
 		}
 		else if (_strcmp(vectors.argv[0], "exit") == 0)
 			exit(EXIT_SUCCESS);
+		_printf("I passed checks for builtins!\n");
 		if (vectors.argv && vectors.argv[0])
 			path_validate(&vectors);
 		free(line);
