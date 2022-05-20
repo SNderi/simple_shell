@@ -22,7 +22,7 @@ int main(int ac __attribute__((unused)), char **av)
 	while (1)
 	{
 		if (pipe == 1)
-			printf("$ ");
+			_printf("$ ");
 		line = _getline();
 		if (line[0] == '\0' || line[1] == '\0' || _strcmp(line, "\n") == 0)
 		{
@@ -38,7 +38,7 @@ int main(int ac __attribute__((unused)), char **av)
 				_printf("\n");
 			}
 		}
-		else if (strcmp(vectors.argv[0], "exit") == 0)
+		else if (_strcmp(vectors.argv[0], "exit") == 0)
 			exit(EXIT_SUCCESS);
 		if (vectors.argv && vectors.argv[0])
 			path_validate(&vectors);

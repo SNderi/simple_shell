@@ -144,7 +144,7 @@ void path_validate(args_t *vec)
 
 		if (path != NULL)
 		{
-			path_duplicate = strdup(path + 5); /* removing PATH= */
+			path_duplicate = _strdup(path + 5); /* removing PATH= */
 			tokens = tokenize(path_duplicate, ":");
 			for (i = 0; tokens && tokens[i]; i++)
 			{

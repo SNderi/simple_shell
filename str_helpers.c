@@ -103,3 +103,28 @@ char *_strcat(char *path, char *command)
 
 	return (str_new);
 }
+
+/**
+ * _strdup - duplicates a string using malloc
+ * @str: string to be duplicated
+ * 
+ * Return: a pointer to duplicated string
+ */
+char *_strdup(char *str)
+{
+	char *copy;
+
+		int len, i;
+
+	if (str == 0)
+		return (NULL);
+
+	for (len = 0; str[len]; len++)
+		;
+	copy = malloc((len + 1) * sizeof(char));
+
+	for (i = 0; i <= len; i++)
+		copy[i] = str[i];
+
+	return (copy);
+}

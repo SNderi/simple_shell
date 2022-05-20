@@ -30,6 +30,7 @@ extern char **environ;
 
 char *_getline();
 char **tokenize(char *line, char *del);
+char **_realloc(char **ptr, size_t *size);
 
 void _printf(char *string);
 void p_error(args_t *vec, char *message);
@@ -40,6 +41,7 @@ void _strcpy(char *dest, char *src);
 int _strlen(char *string);
 int _strcmp(char *str1, char *str2);
 char *_strcat(char *dest, char *src);
+char *_strdup(char *str);
 
 int path_check(char *arg);
 char *find_path(char **envp);

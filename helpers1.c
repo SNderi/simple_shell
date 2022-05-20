@@ -36,10 +36,11 @@ char *_getline()
  */
 char **tokenize(char *line, char *del)
 {
-	int bufsize = 64, position = 0;
+	size_t position = 0;
 	int len, x;
 	char *token, *new;
-	char **tokens = malloc(bufsize * sizeof(char *));
+	size_t i = 64;
+	char **tokens = malloc(i* sizeof(char *));
 
 	if (tokens == NULL)
 	{
@@ -47,22 +48,22 @@ char **tokenize(char *line, char *del)
 		exit(EXIT_FAILURE);
 	}
 
-	len = strlen(line); /* new is equal line */
+	len = _strlen(line); /* new is equal line */
 	new = malloc(len);
-	strcpy(new, line);
+	_strcpy(new, line);
 
 	token = strtok(new, del);
 	while (token != NULL)
 	{
-		x = strlen(token);
+		x = _strlen(token);
 		tokens[position] = malloc(x * sizeof(char));
-		strcpy(tokens[position], token);
+		_strcpy(tokens[position], token);
 		position++;
 
-		if (position >= bufsize)
+		if (position >= i)
 		{
-			bufsize += 64;
-			tokens = realloc(tokens, bufsize * sizeof(char *));
+			i += 64;
+			tokens = _realloc(tokens, &i);
 			if (tokens == NULL)
 			{
 				perror("Error: realloc() in tokenize()");
