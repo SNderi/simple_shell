@@ -40,7 +40,7 @@ char **tokenize(char *line, char *del)
 	int len, x;
 	char *token, *new;
 	size_t i = 64;
-	char **tokens = malloc(i* sizeof(char *));
+	char **tokens = malloc(i * sizeof(char *));
 
 	if (tokens == NULL)
 	{

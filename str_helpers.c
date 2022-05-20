@@ -107,7 +107,7 @@ char *_strcat(char *path, char *command)
 /**
  * _strdup - duplicates a string using malloc
  * @str: string to be duplicated
- * 
+ *
  * Return: a pointer to duplicated string
  */
 char *_strdup(char *str)
