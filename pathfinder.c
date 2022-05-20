@@ -78,8 +78,7 @@ int exec_current(args_t *vec)
 		}
 			return (0);
 	}
-	else
-		perror("Error: stat() in exec_current() ");
+	p_error(vec, "not found");
 	return (0);
 }
 
@@ -163,7 +162,9 @@ void path_validate(args_t *vec)
 				exit(EXIT_FAILURE);
 		}
 		if (path == NULL || tokens[i] == NULL)
-			perror(vec->argv[0]);
+		{
+			p_error(vec, "not found");
+		}
 		free(tokens);
 	}
 	if (result == 1)

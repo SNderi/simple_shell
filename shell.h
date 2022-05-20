@@ -15,11 +15,15 @@
  * environment variable
  * @argv: string array of the command arguments
  * @env: string array of env values
+ * @av: argument to main
+ * @count: to be used in p_error
  */
 typedef struct arguments
 {
 	char **argv;
 	char **env;
+	char **av;
+	unsigned int count;
 } args_t;
 
 extern char **environ;
@@ -28,6 +32,9 @@ char *_getline();
 char **tokenize(char *line, char *del);
 
 void _printf(char *string);
+void p_error(args_t *vec, char *message);
+void p_error(args_t *vec, char *message);
+char *_uitoa(unsigned int num);
 
 void _strcpy(char *dest, char *src);
 int _strlen(char *string);
